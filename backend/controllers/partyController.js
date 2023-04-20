@@ -1,4 +1,4 @@
-const PartyModel = require("../models/Party");
+const Party = require("../models/Party");
 
 const checkPartyBudget = (budget, services) => {
     const priceSum = services.reduce((sum, service) => sum + service.price, 0);
@@ -30,7 +30,7 @@ const partyController = {
                 return;
             }
 
-            const response = await PartyModel.create(party);
+            const response = await Party.create(party);
 
             res.status(201).json({ response, msg: "Festa criada com sucesso." });
         } catch (error) {
@@ -39,7 +39,7 @@ const partyController = {
     },
     getAll: async (req, res) => {
         try {
-            const parties = await PartyModel.find();
+            const parties = await Party.find();
 
             res.json(parties);
         } catch (error) {
@@ -49,7 +49,7 @@ const partyController = {
     get: async (req, res) => {
         try {
             const id = req.params.id;
-            const party = await PartyModel.findById(id);
+            const party = await Party.findById(id);
 
             if (!party) {
                 res.status(404).json({ msg: "Festa não encontrada." });
@@ -64,14 +64,14 @@ const partyController = {
     delete: async (req, res) => {
         try {
             const id = req.params.id;
-            const party = await PartyModel.findById(id);
+            const party = await Party.findById(id);
 
             if (!party) {
                 res.status(404).json({ msg: "Festa não encontrada." });
                 return;
             }
 
-            const deletedParty = await PartyModel.findByIdAndDelete(id);
+            const deletedParty = await Party.findByIdAndDelete(id);
 
             res.status(200).json({ deletedParty, mag: "Festa deletada com sucesso." });
         } catch (error) {
@@ -96,7 +96,7 @@ const partyController = {
                 return;
             }
 
-            const updatedParty = await PartyModel.findByIdAndUpdate(id, party);
+            const updatedParty = await Party.findByIdAndUpdate(id, party);
 
             if (!updatedParty) {
                 res.status(404).json({ msg: "Festa não encontrada." });
